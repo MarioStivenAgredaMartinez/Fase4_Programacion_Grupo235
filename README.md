@@ -29,7 +29,7 @@ Este proyecto fue desarrollado en Python aplicando programación orientada a obj
 - README.md
 - logs/
 
- Ejecución
+ ## Ejecución
 Para ejecutar el sistema, usar el siguiente comando:
 
 python main.py
