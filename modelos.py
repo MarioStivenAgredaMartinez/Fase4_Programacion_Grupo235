@@ -53,6 +53,9 @@ class Cliente(Entidad):
         self.documento = documento
         self.email = email
 
+        # Registro de evento al crear un cliente.
+        registrar_evento("INFO", f"Cliente creado: {self.nombre}")
+
     @property
     def nombre(self):
         """Devuelve el nombre del cliente."""
@@ -112,6 +115,13 @@ class Cliente(Entidad):
         except Exception as e:
             raise ClienteInvalidoError("No fue posible asignar el email del cliente.") from e
 
+    def es_valido(self):
+        """
+        Verifica rápidamente si el cliente tiene datos coherentes.
+        Esta mejora permite validar el objeto de forma simple.
+        """
+        return len(self.nombre) >= 2 and self.documento.isdigit() and "@" in self.email
+
     def describir(self) -> str:
         # Método concreto que describe al cliente.
         return f"Cliente {self.nombre} | Documento: {self.documento} | Email: {self.email}"
@@ -142,6 +152,9 @@ class Servicio(ABC):
             self._nombre = nombre
             self._tarifa_base = float(tarifa_base)
             self._disponible = disponible
+
+            # Registro de evento al crear un servicio.
+            registrar_evento("INFO", f"Servicio creado: {self._nombre}")
 
         except Exception as e:
             raise ServicioNoValidoError("No fue posible crear el servicio.") from e
@@ -201,6 +214,8 @@ class ServicioSala(Servicio):
         """
         if cantidad <= 0:
             raise ServicioNoValidoError("La cantidad de horas debe ser mayor que cero.")
+        if descuento < 0:
+            raise ServicioNoValidoError("El descuento no puede ser negativo.")
 
         subtotal = self.tarifa_base * cantidad
         total = subtotal + (subtotal * impuesto) - descuento
@@ -235,6 +250,8 @@ class ServicioEquipo(Servicio):
         """
         if cantidad <= 0:
             raise ServicioNoValidoError("La cantidad de equipos debe ser mayor que cero.")
+        if descuento < 0:
+            raise ServicioNoValidoError("El descuento no puede ser negativo.")
 
         if cantidad > self.stock:
             raise ServicioNoDisponibleError(
@@ -272,6 +289,8 @@ class ServicioAsesoria(Servicio):
         """
         if cantidad <= 0:
             raise ServicioNoValidoError("La cantidad de sesiones debe ser mayor que cero.")
+        if descuento < 0:
+            raise ServicioNoValidoError("El descuento no puede ser negativo.")
 
         subtotal = self.tarifa_base * cantidad
         total = subtotal + (subtotal * impuesto) - descuento
