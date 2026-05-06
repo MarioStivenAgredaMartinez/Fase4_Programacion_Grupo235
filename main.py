@@ -55,6 +55,9 @@ def crear_datos_iniciales():
     """
     global clientes, servicios, reservas
 
+    # Se registra el inicio de la carga de datos de ejemplo.
+    registrar_evento("INFO", "Inicio de la creación de datos iniciales.")
+
     # CLIENTES
     ejecutar("Crear cliente válido 1", lambda: clientes.append(Cliente("C001", "Juan Pérez", "12345678", "juan@gmail.com")))
     ejecutar("Crear cliente válido 2", lambda: clientes.append(Cliente("C002", "María López", "87654321", "maria@gmail.com")))
@@ -107,6 +110,9 @@ def crear_datos_iniciales():
             ejecutar("Cancelar reserva R002", lambda: reservas[1].cancelar())
             ejecutar("Cancelar nuevamente la reserva R002", lambda: reservas[1].cancelar())
 
+    # Se registra el cierre de la carga de datos.
+    registrar_evento("INFO", "Finalizó la creación de datos iniciales.")
+
 
 def mostrar_resumen():
     """
@@ -117,16 +123,25 @@ def mostrar_resumen():
     linea()
 
     print("\nCLIENTES REGISTRADOS:")
-    for cliente in clientes:
-        print(cliente)
+    if not clientes:
+        print("No hay clientes registrados.")
+    else:
+        for cliente in clientes:
+            print(cliente)
 
     print("\nSERVICIOS REGISTRADOS:")
-    for servicio in servicios:
-        print(servicio)
+    if not servicios:
+        print("No hay servicios registrados.")
+    else:
+        for servicio in servicios:
+            print(servicio)
 
     print("\nRESERVAS REGISTRADAS:")
-    for reserva in reservas:
-        print(reserva)
+    if not reservas:
+        print("No hay reservas registradas.")
+    else:
+        for reserva in reservas:
+            print(reserva)
 
 
 def menu():
@@ -143,11 +158,19 @@ def menu():
         print("3. Ver reservas")
         print("4. Ejecutar demostración automática")
         print("5. Salir")
-        opcion = input("Seleccione una opción: ").strip()
+
+        # Mejora: se valida que la entrada sea numérica antes de continuar.
+        opcion = input("Seleccione una opción del menú (1-5): ").strip()
+
+        if not opcion.isdigit():
+            print("Debe ingresar un número válido.")
+            registrar_evento("WARNING", "El usuario ingresó una opción no numérica en el menú.")
+            continue
 
         if opcion == "1":
             linea()
             print("CLIENTES")
+            registrar_evento("INFO", "Consulta de clientes")
             if not clientes:
                 print("No hay clientes registrados.")
             else:
@@ -157,6 +180,7 @@ def menu():
         elif opcion == "2":
             linea()
             print("SERVICIOS")
+            registrar_evento("INFO", "Consulta de servicios")
             if not servicios:
                 print("No hay servicios registrados.")
             else:
@@ -166,6 +190,7 @@ def menu():
         elif opcion == "3":
             linea()
             print("RESERVAS")
+            registrar_evento("INFO", "Consulta de reservas")
             if not reservas:
                 print("No hay reservas registradas.")
             else:
@@ -174,6 +199,8 @@ def menu():
 
         elif opcion == "4":
             # Se ejecuta la simulación de operaciones.
+            print("Ejecutando demostración automática del sistema...")
+            registrar_evento("INFO", "Inicio de demostración automática desde el menú")
             crear_datos_iniciales()
 
         elif opcion == "5":
