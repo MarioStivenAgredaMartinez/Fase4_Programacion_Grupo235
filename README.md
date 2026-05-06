@@ -1,3 +1,4 @@
+
 # Sistema Integral de Gestión de Clientes, Servicios y Reservas
 
 ## Curso
@@ -28,8 +29,8 @@ Este proyecto fue desarrollado en Python aplicando programación orientada a obj
 - README.md
 - logs/
 
-## Ejecución
-Abrir la terminal y ejecutar:
+ Ejecución
+Para ejecutar el sistema, usar el siguiente comando:
 
 python main.py
 
