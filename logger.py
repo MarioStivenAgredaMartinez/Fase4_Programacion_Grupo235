@@ -14,6 +14,15 @@ def registrar_evento(tipo: str, mensaje: str) -> None:
     tipo: tipo de evento, por ejemplo INFO, ERROR o WARNING.
     mensaje: explicación breve del evento ocurrido.
     """
+
+    # Validación básica del tipo de evento.
+    if not tipo or not str(tipo).strip():
+        tipo = "INFO"
+
+    # Validación básica del mensaje.
+    if not mensaje or not str(mensaje).strip():
+        mensaje = "Evento sin descripción."
+
     # Se crea la carpeta logs si todavía no existe.
     carpeta_logs = Path("logs")
     carpeta_logs.mkdir(exist_ok=True)
@@ -24,6 +33,9 @@ def registrar_evento(tipo: str, mensaje: str) -> None:
     # Se obtiene la fecha y hora actual para registrar cuándo ocurrió el evento.
     fecha_hora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    # Se normaliza el tipo de evento para evitar errores en el registro.
+    tipo = str(tipo).upper()
+
     # Se abre el archivo en modo append para no borrar lo anterior.
     with open(archivo_log, "a", encoding="utf-8") as archivo:
-        archivo.write(f"[{fecha_hora}] [{tipo.upper()}] {mensaje}\n")
+        archivo.write(f"[{fecha_hora}] [{tipo}] {mensaje}\n")
