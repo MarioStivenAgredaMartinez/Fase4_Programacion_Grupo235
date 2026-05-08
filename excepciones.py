@@ -2,26 +2,37 @@
 # En este archivo se definen las excepciones personalizadas del sistema.
 # Estas excepciones ayudan a identificar errores específicos de forma clara.
 
+
 class ErrorAplicacion(Exception):
     """Excepción base para todos los errores del sistema."""
-    pass
+
+    def __init__(self, mensaje="Ha ocurrido un error en la aplicación."):
+        super().__init__(mensaje)
 
 
 class ClienteInvalidoError(ErrorAplicacion):
     """Se genera cuando un cliente tiene datos inválidos."""
-    pass
+
+    def __init__(self, mensaje="Los datos del cliente no son válidos."):
+        super().__init__(mensaje)
 
 
 class ServicioNoValidoError(ErrorAplicacion):
     """Se genera cuando un servicio tiene información incorrecta."""
-    pass
+
+    def __init__(self, mensaje="La información del servicio es inválida."):
+        super().__init__(mensaje)
 
 
 class ServicioNoDisponibleError(ErrorAplicacion):
     """Se genera cuando se intenta usar un servicio no disponible."""
-    pass
+
+    def __init__(self, mensaje="El servicio no se encuentra disponible."):
+        super().__init__(mensaje)
 
 
 class ReservaError(ErrorAplicacion):
     """Se genera cuando ocurre un problema al crear, procesar o cancelar una reserva."""
-    pass
+
+    def __init__(self, mensaje="Ha ocurrido un error en la reserva."):
+        super().__init__(mensaje)
