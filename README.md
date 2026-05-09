@@ -38,6 +38,7 @@ python main.py
 - Mario Stiven Agreda Martinez
 - Jose Daniel Jurado Villota
 - Deisy Tatiana Morales Rodriguez
+- José Sebastián Benavides Betancourth
 
 ## Universidad
 Universidad Nacional Abierta y a Distancia – UNAD
